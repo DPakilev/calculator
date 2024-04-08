@@ -1,12 +1,12 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception{
         Scanner input = new Scanner(System.in);
         System.out.println(calc(input.nextLine()));
     }
 
-    public static String calc(String input) {
+    public static String calc(String input) throws Exception{
         String[] arithmeticOperation = {"+", "-", "*", "/"};
         String[] regexForSplit = {"\\+", "-", "\\*", "/"};
         String[] verifyOperands = input.split("\\+|-|\\*|/");
@@ -18,10 +18,10 @@ public class Main {
 
 
         if (verifyOperands.length>2) {
-            return "Формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)";
+            throw new Exception("Формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
 
         } else if (verifyOperands.length==1) {
-            return "Строка не является математической операцией";
+            throw new Exception("Строка не является математической операцией");
 
         } else {
             for (int count=0; count<=arithmeticOperation.length-1; count++) {
@@ -44,13 +44,13 @@ public class Main {
             firstOperand = RomanToInt(arithmeticOperands[0].trim());
             secondOperand = RomanToInt(arithmeticOperands[1].trim());
             if ((firstOperand == 0)|(secondOperand == 0)) {
-                return "Используются одновременно разные системы счисления";
+                throw new Exception("Используются одновременно разные системы счисления");
             }
             romanNumbers = true;
         }
 
         if ((firstOperand > 10)|(secondOperand > 10)){
-            return "Калькулятор принимает на вход числа от 1 до 10 включительно";
+            throw new Exception("Калькулятор принимает на вход числа от 1 до 10 включительно");
         }
 
         switch (arithmeticOperation[indexArithmeticOperation]){
@@ -67,7 +67,7 @@ public class Main {
                     if (result>0){
                         return IntToRoman(result);
                     } else {
-                        return "В римской системе нет отрицательных чисел";
+                        throw new Exception("В римской системе нет отрицательных чисел");
                     }
                 } else {
                     return Integer.toString(result);
@@ -85,13 +85,13 @@ public class Main {
                     if (result>0){
                         return IntToRoman(result);
                     } else {
-                        return "В римской системе нет отрицательных чисел";
+                        throw new Exception("В римской системе нет отрицательных чисел");
                     }
                 } else {
                     return Integer.toString(result);
                 }
         }
-        return "Можно использовать лишь 4 оператора: +, -, *, /";
+        throw new Exception("Можно использовать лишь 4 оператора: +, -, *, /");
     }
 
     public  static int RomanToInt(String romanNumbers){
